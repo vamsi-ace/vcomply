@@ -1,0 +1,47 @@
+#include <vector>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool isSlotAvailable( vector<string>approved_Leaves, string requested_leave )
+{
+    int i ;
+    int len = approved_Leaves.size();
+    auto it = requested_leave.find(':');
+    auto it1 = requested_leave.find(',');
+    auto it2 = requested_leave.find(':',it+1);
+    
+    string leavefrom = requested_leave.substr( it+2 , it1 );
+    string leaveupto = requested_leave.substr( it2+2, len);
+    for( i = 0 ; i < len ; i++ )
+    {
+        if( approved_Leaves[i].find(leavefrom) != string::npos )
+        {
+            return false;
+        }
+        if( approved_Leaves[i].find(leaveupto) != string::npos )
+        {
+            
+            return false;
+        }
+    }
+    return true;
+}
+
+
+int main()
+{
+    
+ vector<string> approvedLeaves = {
+"emp_id: 1, leaveFrom: 14-12-2020, leaveUpto: 18-12-2020",
+"emp_id: 3, leaveFrom: 22-12-2020, leaveUpto: 24-12-2020",
+"emp_id: 7, leaveFrom: 27-12-2020, leaveUpto: 30-12-2020",
+"emp_id: 29, leaveFrom: 02-12-2020, leaveUpto: 10-12-2020",
+"emp_id 45, leaveFrom: 24-02-2021, leaveUpto: 17-03-2021"
+ }
+ 
+ string requested_Leave = "leaveFrom: 19-12-2020, leaveUpto : 20-12-2020";
+ if( isSlotAvailable(approvedLeaves , requested_Leave));
+    return 0;
+}
